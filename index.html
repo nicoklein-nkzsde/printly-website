@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Printly — Personalisierte 3D-Drucke</title>
+<meta name="description" content="Personalisierte Namensschilder, Vasen, Deko und Geschenke aus dem 3D-Drucker. Individuell, schnell, mit Liebe gemacht.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,600&family=Instrument+Sans:wght@300;400;500&family=DM+Mono:wght@300&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,600&family=Instrument+Sans:wght@300;400;500&family=DM+Mono:wght@300&display=swap" rel="stylesheet"></noscript>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#fdf9f3;
+  --cream2:#f7f1e8;
+  --cream3:#efe8da;
+  --sage:#3d6b5a;
+  --sage2:#2e5244;
+  --sage-l:rgba(61,107,90,.1);
+  --sage-ll:rgba(61,107,90,.06);
+  --mint-bright:#4ecba0;
+  --terracotta:#c4714a;
+  --terra-l:rgba(196,113,74,.1);
+  --ink:#1c1a17;
+  --ink6:rgba(28,26,23,.6);
+  --ink3:rgba(28,26,23,.3);
+  --ink1:rgba(28,26,23,.08);
+  --ink05:rgba(28,26,23,.04);
+  --r:16px;
+  --r-lg:24px;
+  --r-xl:32px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--ink);font-family:'Instrument Sans',sans-serif;font-weight:300;overflow-x:hidden;line-height:1.6}
+
+/* REVEAL */
+.rev{opacity:0;transform:translateY(20px);transition:opacity .65s cubic-bezier(.16,1,.3,1),transform .65s cubic-bezier(.16,1,.3,1)}
+.rev.on{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+
+/* NAV */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(253,249,243,.92);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--ink1);
+  padding:.9rem 1.25rem;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.logo{
+  font-family:'Fraunces',serif;font-size:24px;font-weight:600;
+  color:var(--ink);letter-spacing:-.01em;
+}
+.logo span{color:var(--sage)}
+.nav-right{display:flex;align-items:center;gap:.75rem}
+.nav-tag{
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  background:var(--sage-l);color:var(--sage);
+  padding:.35rem .85rem;border-radius:100px;font-weight:400;
+}
+.nav-btn{
+  font-size:12px;font-weight:500;letter-spacing:.05em;
+  background:var(--sage);color:#fff;
+  padding:.55rem 1.25rem;border-radius:100px;
+  text-decoration:none;transition:background .2s;border:none;cursor:pointer;
+  font-family:'Instrument Sans',sans-serif;
+}
+.nav-btn:hover{background:var(--sage2)}
+.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:4px}
+.hamburger span{display:block;width:20px;height:1.5px;background:var(--ink);border-radius:2px}
+.mob-menu{
+  display:none;position:fixed;inset:0;z-index:190;
+  background:rgba(253,249,243,.98);backdrop-filter:blur(20px);
+  flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;
+}
+.mob-menu.open{display:flex}
+.mob-menu a{
+  font-family:'Fraunces',serif;font-size:40px;font-weight:600;
+  color:var(--ink);text-decoration:none;transition:color .2s;
+}
+.mob-menu a:hover{color:var(--sage)}
+.mob-close{
+  position:absolute;top:1.25rem;right:1.25rem;
+  width:36px;height:36px;border-radius:50%;background:var(--ink1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;cursor:pointer;color:var(--ink6);
+}
+
+/* HERO */
+.hero{
+  padding:2.5rem 1.25rem 2rem;
+  display:grid;grid-template-columns:1fr;gap:2rem;
+}
+.hero-pill{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:var(--sage-l);color:var(--sage);
+  font-size:11px;font-weight:500;letter-spacing:.08em;
+  padding:.4rem 1rem;border-radius:100px;margin-bottom:1rem;
+}
+.hero-pill::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--mint-bright)}
+.hero-h1{
+  font-family:'Fraunces',serif;
+  font-size:clamp(44px,12vw,76px);
+  font-weight:700;line-height:.9;letter-spacing:-.03em;
+  color:var(--ink);margin-bottom:1rem;
+}
+.hero-h1 em{font-style:italic;font-weight:300;color:var(--sage)}
+.hero-sub{font-size:15px;color:var(--ink6);line-height:1.7;font-weight:300;max-width:380px;margin-bottom:2rem}
+.hero-btns{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.btn-sage{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-size:13px;font-weight:500;letter-spacing:.04em;
+  background:var(--sage);color:#fff;
+  padding:.85rem 1.75rem;border-radius:100px;
+  text-decoration:none;transition:all .2s;
+}
+.btn-sage:hover{background:var(--sage2);transform:translateY(-1px)}
+.btn-outline{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-size:13px;font-weight:400;letter-spacing:.04em;
+  border:1.5px solid var(--ink1);color:var(--ink6);
+  padding:.85rem 1.75rem;border-radius:100px;
+  text-decoration:none;transition:all .2s;
+}
+.btn-outline:hover{border-color:var(--sage);color:var(--sage)}
+
+/* Hero visual — big decorative card */
+.hero-visual{
+  background:var(--cream2);border-radius:var(--r-xl);
+  padding:2.5rem 2rem;
+  border:1px solid var(--ink1);
+  position:relative;overflow:hidden;
+  min-height:280px;
+  display:flex;flex-direction:column;justify-content:flex-end;
+}
+.hero-visual::before{
+  content:'';position:absolute;top:-60px;right:-60px;
+  width:240px;height:240px;border-radius:50%;
+  background:radial-gradient(circle,rgba(61,107,90,.12) 0%,transparent 70%);
+}
+.hero-visual::after{
+  content:'';position:absolute;bottom:-40px;left:-40px;
+  width:180px;height:180px;border-radius:50%;
+  background:radial-gradient(circle,rgba(196,113,74,.08) 0%,transparent 70%);
+}
+.hero-big-text{
+  font-family:'Fraunces',serif;
+  font-size:clamp(72px,18vw,120px);
+  font-weight:700;letter-spacing:-.04em;line-height:.85;
+  color:rgba(28,26,23,.06);
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  white-space:nowrap;
+  pointer-events:none;
+}
+.hero-cards-preview{
+  display:flex;gap:.6rem;position:relative;z-index:1;flex-wrap:wrap;
+}
+.hc{
+  background:#fff;border-radius:var(--r);
+  padding:.75rem 1rem;border:1px solid var(--ink05);
+  font-size:12px;font-weight:400;color:var(--ink6);
+  display:flex;align-items:center;gap:.5rem;
+}
+.hc-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* MARQUEE */
+.marquee{
+  border-top:1px solid var(--ink1);border-bottom:1px solid var(--ink1);
+  padding:.7rem 0;overflow:hidden;background:var(--ink);
+}
+.marquee-inner{display:inline-flex;gap:0;animation:mq 20s linear infinite;white-space:nowrap}
+@keyframes mq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.mq-item{
+  font-size:12px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;
+  color:rgba(253,249,243,.35);
+  padding:0 2rem;display:inline-flex;align-items:center;gap:2rem;
+}
+.mq-item::after{content:'✦';color:var(--sage);font-size:8px}
+
+/* SECTION */
+.sec{padding:3.5rem 1.25rem}
+.sec-alt{background:var(--cream2)}
+.sec-dark{background:var(--ink);color:var(--cream)}
+.chip{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--sage-l);color:var(--sage);
+  padding:.3rem .85rem;border-radius:100px;margin-bottom:.85rem;
+}
+.chip-dark{background:rgba(61,107,90,.2);color:rgba(78,203,160,.9)}
+.sec-h2{
+  font-family:'Fraunces',serif;
+  font-size:clamp(30px,7vw,48px);
+  font-weight:700;letter-spacing:-.025em;line-height:.95;
+  color:var(--ink);margin-bottom:.5rem;
+}
+.sec-h2 em{font-style:italic;font-weight:300;color:var(--sage)}
+.sec-h2-l{color:var(--cream)}
+.sec-h2-l em{color:var(--mint-bright)}
+.sec-sub{font-size:14px;color:var(--ink6);font-weight:300;line-height:1.7;max-width:420px;margin-bottom:2rem}
+.sec-sub-l{color:rgba(253,249,243,.5)}
+
+/* PRODUCT CARDS */
+.prod-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.prod-card{
+  background:#fff;border-radius:var(--r-lg);
+  border:1px solid var(--ink1);overflow:hidden;
+  transition:transform .25s,box-shadow .25s;
+}
+.prod-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(28,26,23,.08)}
+.prod-card.tall{grid-row:span 2}
+.prod-thumb{
+  aspect-ratio:1;background:var(--cream2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:36px;
+  position:relative;overflow:hidden;
+}
+.prod-thumb img{width:100%;height:100%;object-fit:cover}
+.prod-thumb-placeholder{font-size:40px;opacity:.5}
+.prod-badge{
+  position:absolute;top:.6rem;left:.6rem;
+  font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--sage);color:#fff;
+  padding:.25rem .65rem;border-radius:100px;
+}
+.prod-badge-terra{background:var(--terracotta)}
+.prod-body{padding:1rem 1rem .85rem}
+.prod-name{font-family:'Fraunces',serif;font-size:clamp(14px,3.5vw,17px);font-weight:600;color:var(--ink);margin-bottom:.3rem;letter-spacing:-.01em}
+.prod-desc{font-size:11px;color:var(--ink6);line-height:1.5;font-weight:300;margin-bottom:.75rem}
+.prod-footer{display:flex;justify-content:space-between;align-items:center}
+.prod-price{font-family:'DM Mono',monospace;font-size:12px;color:var(--sage);font-weight:400}
+.prod-btn{
+  font-size:10px;font-weight:500;letter-spacing:.08em;
+  background:var(--sage-l);color:var(--sage);
+  padding:.3rem .85rem;border-radius:100px;
+  text-decoration:none;transition:background .2s;border:none;cursor:pointer;
+  font-family:'Instrument Sans',sans-serif;
+}
+.prod-btn:hover{background:var(--sage);color:#fff}
+
+/* CATEGORIES HORIZONTAL */
+.cat-scroll{display:flex;gap:.75rem;overflow-x:auto;padding-bottom:.5rem;margin-top:2rem;scrollbar-width:none}
+.cat-scroll::-webkit-scrollbar{display:none}
+.cat-chip{
+  flex-shrink:0;background:#fff;border-radius:var(--r-lg);
+  border:1px solid var(--ink1);padding:1.25rem 1.25rem;
+  min-width:140px;transition:all .2s;cursor:pointer;
+}
+.cat-chip:hover{border-color:var(--sage);background:var(--sage-ll)}
+.cat-chip-icon{font-size:24px;margin-bottom:.6rem;display:block}
+.cat-chip-name{font-family:'Fraunces',serif;font-size:14px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+.cat-chip-count{font-size:10px;color:var(--ink3);margin-top:.15rem}
+
+/* PERSONALISIERUNG */
+.pers-grid{display:grid;grid-template-columns:1fr;gap:.75rem;margin-top:2rem}
+.pers-item{
+  background:#fff;border-radius:var(--r-lg);
+  border:1px solid var(--ink1);padding:1.5rem;
+  display:grid;grid-template-columns:48px 1fr;gap:1rem;align-items:start;
+  transition:border-color .2s;
+}
+.pers-item:hover{border-color:var(--sage)}
+.pers-num{
+  width:40px;height:40px;border-radius:50%;
+  background:var(--sage-l);color:var(--sage);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Fraunces',serif;font-size:16px;font-weight:600;flex-shrink:0;
+}
+.pers-title{font-family:'Fraunces',serif;font-size:16px;font-weight:600;color:var(--ink);margin-bottom:.3rem;letter-spacing:-.01em}
+.pers-desc{font-size:12px;color:var(--ink6);line-height:1.6;font-weight:300}
+
+/* MATERIAL PILLS */
+.mat-list{display:flex;flex-direction:column;gap:.5rem;margin-top:2rem}
+.mat-row{
+  background:rgba(253,249,243,.06);border-radius:var(--r);
+  border:1px solid rgba(253,249,243,.1);
+  padding:1.25rem 1.25rem;
+  display:flex;align-items:center;gap:1rem;
+}
+.mat-swatch{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.mat-info{flex:1}
+.mat-name{font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:var(--cream);letter-spacing:-.01em}
+.mat-desc{font-size:11px;color:rgba(253,249,243,.45);font-weight:300;line-height:1.5;margin-top:.2rem}
+.mat-tag{font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;background:rgba(61,107,90,.25);color:rgba(78,203,160,.9);padding:.25rem .7rem;border-radius:100px;flex-shrink:0}
+
+/* PORTFOLIO */
+.port-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:2rem}
+.port-item{
+  border-radius:var(--r-lg);overflow:hidden;
+  aspect-ratio:1;background:var(--cream3);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Fraunces',serif;font-style:italic;font-size:13px;color:var(--ink3);
+  position:relative;transition:transform .3s;cursor:pointer;
+}
+.port-item:hover{transform:scale(.98)}
+.port-item.wide{grid-column:1/-1;aspect-ratio:16/8}
+.port-item img{width:100%;height:100%;object-fit:cover}
+.port-label{
+  position:absolute;bottom:.75rem;left:.75rem;
+  background:rgba(28,26,23,.6);backdrop-filter:blur(8px);
+  color:#fff;font-size:10px;font-weight:500;letter-spacing:.08em;
+  padding:.3rem .75rem;border-radius:100px;
+  font-family:'Instrument Sans',sans-serif;
+}
+
+/* CONTACT */
+.contact-card{
+  background:#fff;border-radius:var(--r-xl);
+  border:1px solid var(--ink1);padding:2rem 1.5rem;
+  margin-top:2rem;
+}
+.cline{display:flex;justify-content:space-between;align-items:center;padding:.85rem 0;border-bottom:1px solid var(--ink05);font-size:13px}
+.cline:last-child{border-bottom:none}
+.ck{font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+.cv{color:var(--ink);font-weight:400}
+.cv a{color:var(--sage);text-decoration:none}
+.contact-btns{display:flex;gap:.75rem;margin-top:1.5rem;flex-wrap:wrap}
+
+/* FOOTER */
+footer{
+  background:var(--ink);padding:2rem 1.25rem 1.5rem;
+}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:2rem;flex-wrap:wrap;gap:1.5rem}
+.f-logo{font-family:'Fraunces',serif;font-size:22px;font-weight:600;color:rgba(253,249,243,.5);letter-spacing:-.01em}
+.f-logo span{color:var(--sage)}
+.f-tagline{font-size:12px;color:rgba(253,249,243,.3);margin-top:.25rem;font-style:italic}
+.f-links{display:flex;gap:1rem;flex-wrap:wrap}
+.f-links a{font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(253,249,243,.2);text-decoration:none;transition:color .2s}
+.f-links a:hover{color:var(--sage)}
+.footer-bottom{border-top:1px solid rgba(253,249,243,.06);padding-top:1.25rem;font-size:11px;color:rgba(253,249,243,.2)}
+
+/* MOBILE */
+@media(max-width:768px){
+  .nav-tag{display:none}
+  .hamburger{display:flex}
+  .nav-btn{display:none}
+  .sec{padding:3rem 1.25rem}
+  .prod-grid{grid-template-columns:1fr 1fr}
+  .port-grid{grid-template-columns:1fr 1fr}
+  .footer-top{flex-direction:column}
+}
+@media(max-width:400px){
+  .prod-grid{grid-template-columns:1fr}
+  .prod-card.tall{grid-row:span 1}
+}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.hero-pill{animation:fadeIn .7s .1s both}
+.hero-h1{animation:fadeIn .8s .22s both}
+.hero-sub{animation:fadeIn .8s .36s both}
+.hero-btns{animation:fadeIn .8s .48s both}
+.hero-visual{animation:fadeIn .9s .28s both}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">print<span>ly</span></div>
+  <div class="nav-right">
+    <div class="nav-tag">3D-Druck · Personalisiert</div>
+    <a href="#kontakt" class="nav-btn">Anfragen</a>
+    <div class="hamburger" onclick="document.getElementById('mm').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<div class="mob-menu" id="mm">
+  <span class="mob-close" onclick="document.getElementById('mm').classList.remove('open')">✕</span>
+  <a href="#produkte" onclick="document.getElementById('mm').classList.remove('open')">Produkte</a>
+  <a href="#portfolio" onclick="document.getElementById('mm').classList.remove('open')">Portfolio</a>
+  <a href="#material" onclick="document.getElementById('mm').classList.remove('open')">Material</a>
+  <a href="#kontakt" onclick="document.getElementById('mm').classList.remove('open')">Kontakt</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-pill">Bambu Lab A1 · Handgemacht mit Liebe</div>
+    <h1 class="hero-h1">DEIN<br>NAME.<br><em>Dein Stück.</em></h1>
+    <p class="hero-sub">Personalisierte 3D-Drucke für jeden Anlass. Namensschilder, Vasen, Geschenke und Deko — individuell für dich gemacht.</p>
+    <div class="hero-btns">
+      <a href="#kontakt" class="btn-sage">Wunsch anfragen →</a>
+      <a href="#produkte" class="btn-outline">Produkte ansehen</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-big-text">3D</div>
+    <div class="hero-cards-preview">
+      <div class="hc"><div class="hc-dot" style="background:#4ecba0"></div>Namensschilder</div>
+      <div class="hc"><div class="hc-dot" style="background:#c4714a"></div>Geschenke</div>
+      <div class="hc"><div class="hc-dot" style="background:#7ba5d4"></div>Vasen & Deko</div>
+      <div class="hc"><div class="hc-dot" style="background:#d4a843"></div>Figuren</div>
+      <div class="hc"><div class="hc-dot" style="background:#a47bc4"></div>Saisonal</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-inner">
+    <span class="mq-item">Namensschilder</span><span class="mq-item">Vasen</span><span class="mq-item">Muttertag</span><span class="mq-item">Ostern</span><span class="mq-item">Figuren</span><span class="mq-item">Personalisiert</span><span class="mq-item">48h Lieferzeit</span><span class="mq-item">PLA · PETG · TPU</span><span class="mq-item">Bambu Lab A1</span>
+    <span class="mq-item">Namensschilder</span><span class="mq-item">Vasen</span><span class="mq-item">Muttertag</span><span class="mq-item">Ostern</span><span class="mq-item">Figuren</span><span class="mq-item">Personalisiert</span><span class="mq-item">48h Lieferzeit</span><span class="mq-item">PLA · PETG · TPU</span><span class="mq-item">Bambu Lab A1</span>
+  </div>
+</div>
+
+<!-- KATEGORIEN -->
+<section class="sec" style="padding-bottom:1rem">
+  <div class="chip rev">Kategorien</div>
+  <h2 class="sec-h2 rev d1">Was möchtest<br>du haben?</h2>
+  <div class="cat-scroll rev d2">
+    <div class="cat-chip"><span class="cat-chip-icon">🔤</span><div class="cat-chip-name">Namen & Buchstaben</div><div class="cat-chip-count">Bestseller</div></div>
+    <div class="cat-chip"><span class="cat-chip-icon">💝</span><div class="cat-chip-name">Geschenke</div><div class="cat-chip-count">Muttertag, Geburtstag</div></div>
+    <div class="cat-chip"><span class="cat-chip-icon">🌿</span><div class="cat-chip-name">Vasen & Deko</div><div class="cat-chip-count">Fürs Zuhause</div></div>
+    <div class="cat-chip"><span class="cat-chip-icon">🐇</span><div class="cat-chip-name">Saisonal</div><div class="cat-chip-count">Ostern, Weihnachten</div></div>
+    <div class="cat-chip"><span class="cat-chip-icon">🎮</span><div class="cat-chip-name">Figuren</div><div class="cat-chip-count">Gaming & mehr</div></div>
+    <div class="cat-chip"><span class="cat-chip-icon">⚙️</span><div class="cat-chip-name">Funktionsteile</div><div class="cat-chip-count">Auf Anfrage</div></div>
+  </div>
+</section>
+
+<!-- PRODUKTE -->
+<section class="sec" id="produkte">
+  <div class="chip rev">Produkte</div>
+  <h2 class="sec-h2 rev d1">Unsere <em>Bestseller</em></h2>
+  <div class="prod-grid rev d2">
+
+    <div class="prod-card tall">
+      <div class="prod-thumb" style="background:linear-gradient(135deg,#e8f5f0,#d4ede5)">
+        <span class="prod-badge">Nr. 1</span>
+        <span class="prod-thumb-placeholder">🔤</span>
+      </div>
+      <div class="prod-body">
+        <div class="prod-name">Buchstabe mit Name</div>
+        <div class="prod-desc">Dein Anfangsbuchstabe personalisiert mit deinem Namen. Perfektes Geschenk — für jedes Alter.</div>
+        <div class="prod-footer">
+          <div class="prod-price">ab 18 €</div>
+          <a href="#kontakt" class="prod-btn">Anfragen</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="prod-card">
+      <div class="prod-thumb" style="background:linear-gradient(135deg,#fde8e0,#f5d4c8)">
+        <span class="prod-thumb-placeholder">💝</span>
+      </div>
+      <div class="prod-body">
+        <div class="prod-name">Mama Herz-Vase</div>
+        <div class="prod-desc">Herzförmige Vase mit Schriftzug — Klassiker zum Muttertag.</div>
+        <div class="prod-footer">
+          <div class="prod-price">ab 14 €</div>
+          <a href="#kontakt" class="prod-btn">Anfragen</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="prod-card">
+      <div class="prod-thumb" style="background:linear-gradient(135deg,#e8f0e8,#d4e8d0)">
+        <span class="prod-badge prod-badge-terra">Neu</span>
+        <span class="prod-thumb-placeholder">🐰</span>
+      </div>
+      <div class="prod-body">
+        <div class="prod-name">Ostern Deko</div>
+        <div class="prod-desc">Frohe Ostern Schriftzug, Hasenkranz, personalisierbar.</div>
+        <div class="prod-footer">
+          <div class="prod-price">ab 12 €</div>
+          <a href="#kontakt" class="prod-btn">Anfragen</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="prod-card">
+      <div class="prod-thumb" style="background:linear-gradient(135deg,#e8eaf5,#d4d8ee)">
+        <span class="prod-thumb-placeholder">🏺</span>
+      </div>
+      <div class="prod-body">
+        <div class="prod-name">Design Vase</div>
+        <div class="prod-desc">Moderne Vasen in verschiedenen Formen & Farben.</div>
+        <div class="prod-footer">
+          <div class="prod-price">ab 16 €</div>
+          <a href="#kontakt" class="prod-btn">Anfragen</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="prod-card" style="grid-column:1/-1;display:flex;flex-direction:row;align-items:center;gap:0;overflow:hidden">
+      <div style="flex:1;padding:1.25rem 1.25rem">
+        <div class="prod-badge" style="position:static;display:inline-block;margin-bottom:.75rem">Auf Anfrage</div>
+        <div class="prod-name">Dein individueller Wunsch</div>
+        <div class="prod-desc" style="margin-bottom:.75rem">Hast du eine eigene Idee? Wir drucken fast alles — einfach Wunsch schicken.</div>
+        <a href="#kontakt" class="btn-sage" style="font-size:11px;padding:.7rem 1.4rem">Wunsch schicken →</a>
+      </div>
+      <div style="width:100px;height:100%;min-height:120px;background:linear-gradient(135deg,#e8f5f0,#c8e8dc);display:flex;align-items:center;justify-content:center;font-size:36px;flex-shrink:0">✨</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="sec sec-alt" id="portfolio">
+  <div class="chip rev">Portfolio</div>
+  <h2 class="sec-h2 rev d1">Echte <em>Stücke</em></h2>
+  <p class="sec-sub rev d2">Alle Stücke werden frisch gedruckt — jedes ist ein Unikat.</p>
+  <div class="port-grid rev d3">
+    <div class="port-item wide">
+      <span>Deine Fotos kommen hier rein</span>
+    </div>
+    <div class="port-item">
+      <span>Buchstaben & Namen</span>
+      <div class="port-label">Namensschilder</div>
+    </div>
+    <div class="port-item">
+      <span>Mama Geschenke</span>
+      <div class="port-label">Geschenke</div>
+    </div>
+    <div class="port-item">
+      <span>Ostern Deko</span>
+      <div class="port-label">Saisonal</div>
+    </div>
+    <div class="port-item">
+      <span>Vasen & Deko</span>
+      <div class="port-label">Deko</div>
+    </div>
+  </div>
+</section>
+
+<!-- SO GEHT'S -->
+<section class="sec">
+  <div class="chip rev">So einfach</div>
+  <h2 class="sec-h2 rev d1">In 3 Schritten<br>zu <em>deinem Stück</em></h2>
+  <div class="pers-grid rev d2">
+    <div class="pers-item">
+      <div class="pers-num">1</div>
+      <div>
+        <div class="pers-title">Wunsch schicken</div>
+        <div class="pers-desc">Schreib uns via Instagram oder E-Mail was du dir vorstellst — Name, Farbe, Größe, Anlass. Kein technisches Wissen nötig.</div>
+      </div>
+    </div>
+    <div class="pers-item">
+      <div class="pers-num">2</div>
+      <div>
+        <div class="pers-title">Angebot erhalten</div>
+        <div class="pers-desc">Du bekommst innerhalb von 24h ein transparentes Angebot. Auf Wunsch zeigen wir dir vorher eine Vorschau.</div>
+      </div>
+    </div>
+    <div class="pers-item">
+      <div class="pers-num">3</div>
+      <div>
+        <div class="pers-title">Geliefert in 48h</div>
+        <div class="pers-desc">Nach deiner Freigabe wird dein Stück gedruckt und zu dir geschickt — oder Abholung möglich. Meist innerhalb von 48 Stunden.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MATERIAL -->
+<section class="sec sec-dark" id="material">
+  <div class="chip chip-dark rev">Material</div>
+  <h2 class="sec-h2 sec-h2-l rev d1">Qualität die<br><em>man spürt</em></h2>
+  <p class="sec-sub sec-sub-l rev d2">Wir drucken mit hochwertigen Filamenten — für ein perfektes Ergebnis.</p>
+  <div class="mat-list rev d3">
+    <div class="mat-row">
+      <div class="mat-swatch" style="background:#6dbf9e"></div>
+      <div class="mat-info"><div class="mat-name">PLA</div><div class="mat-desc">Standard & vielseitig. Ideal für Deko, Geschenke und Alltagsobjekte. In über 50 Farben verfügbar.</div></div>
+      <div class="mat-tag">Standard</div>
+    </div>
+    <div class="mat-row">
+      <div class="mat-swatch" style="background:#4a9aba"></div>
+      <div class="mat-info"><div class="mat-name">PETG</div><div class="mat-desc">Langlebig & hitzebeständig. Für Objekte die beansprucht werden.</div></div>
+      <div class="mat-tag">Robust</div>
+    </div>
+    <div class="mat-row">
+      <div class="mat-swatch" style="background:#d4c080"></div>
+      <div class="mat-info"><div class="mat-name">Silk & Metallic</div><div class="mat-desc">Seidenglanz und Metallic-Effekte für besondere, hochwertige Stücke.</div></div>
+      <div class="mat-tag">Premium</div>
+    </div>
+    <div class="mat-row">
+      <div class="mat-swatch" style="background:#c4a0c4"></div>
+      <div class="mat-info"><div class="mat-name">TPU & Sonder</div><div class="mat-desc">Flexibles Filament, Neon, Pastell, Holz-Optik und mehr auf Anfrage.</div></div>
+      <div class="mat-tag">Spezial</div>
+    </div>
+  </div>
+</section>
+
+<!-- KONTAKT -->
+<section class="sec" id="kontakt">
+  <div class="chip rev">Kontakt</div>
+  <h2 class="sec-h2 rev d1">Dein Wunsch.<br><em>Unser Druck.</em></h2>
+  <p class="sec-sub rev d2">Schreib uns einfach — wir antworten innerhalb von 24h.</p>
+  <div class="contact-card rev d3">
+    <div class="cline"><span class="ck">Instagram</span><span class="cv"><a href="https://instagram.com/printly" target="_blank">@printly</a></span></div>
+    <div class="cline"><span class="ck">E-Mail</span><span class="cv"><a href="mailto:kontakt@printly.de">kontakt@printly.de</a></span></div>
+    <div class="cline"><span class="ck">WhatsApp</span><span class="cv" style="color:var(--sage)">Einfach schreiben ↗</span></div>
+    <div class="cline"><span class="ck">Lieferzeit</span><span class="cv">ca. 48h nach Bestellung</span></div>
+    <div class="cline" style="border:none"><span class="ck">Reaktionszeit</span><span class="cv" style="color:var(--sage)">innerhalb 24h</span></div>
+  </div>
+  <div class="contact-btns rev d4">
+    <a href="mailto:kontakt@printly.de" class="btn-sage">Jetzt anfragen →</a>
+    <a href="#produkte" class="btn-outline">Produkte ansehen</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="f-logo">print<span>ly</span></div>
+      <div class="f-tagline">Personalisierte 3D-Drucke mit Liebe gemacht.</div>
+    </div>
+    <div class="f-links">
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Printly · Kleinunternehmer gem. §19 UStG</div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(e=>{
+  e.forEach(el=>{if(el.isIntersecting){el.target.classList.add('on');obs.unobserve(el.target);}});
+},{threshold:.1});
+document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
